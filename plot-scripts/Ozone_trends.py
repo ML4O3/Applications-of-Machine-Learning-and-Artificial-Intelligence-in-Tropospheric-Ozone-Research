@@ -13,7 +13,7 @@ import matplotlib.dates as mdates
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 # Read in data from CSV
-filename = 'TOAR_Table_2.csv'
+filename = 'data/TOAR_Table_2.csv'
 readcsv = pd.read_csv(filename, skiprows=1, header=0)
 
 
@@ -62,10 +62,6 @@ plt.clf()
 X,Y = np.meshgrid(lon,lat)
 lons,lats = m(X,Y) # convert the co-ordinates to fit on the map
 
-
-
-
-
 fig = plt.figure(figsize=[12, 4], dpi=300)
 ax1 = fig.add_subplot(111, projection=ccrs.PlateCarree())
 ax1.coastlines()
@@ -88,15 +84,10 @@ ax1.text(0.5, -0.2, 'longitude', va='bottom', ha='center',
         rotation='horizontal', rotation_mode='anchor',
         transform=ax.transAxes)
 
-
-data = pd.read_csv('diurnal_data.csv', index_col=0)
-anndata = pd.read_csv('annual_cycle.csv', index_col=0)
-trenddata = pd.read_csv('trends.csv', index_col=0)
-
-
-
-
-
+# upper panel
+data = pd.read_csv('data/diurnal_data.csv', index_col=0)
+anndata = pd.read_csv('data/annual_cycle.csv', index_col=0)
+trenddata = pd.read_csv('data/trends.csv', index_col=0)
 
 fig = plt.figure(figsize=[7, 2.7], dpi=300)
 
@@ -117,12 +108,10 @@ ax3.set_xlabel("Local time / hrs", fontsize=10)
 ax3.set_ylabel("Ozone / ppb", fontsize=10)
 ax3.set_title('Ozone diurnal cycle')
 ax3.yaxis.set_label_position("left")
-#ax3.yaxis.tick_right()
 ax3.legend(ncols=2, loc='lower center', fontsize=7)
 
 
 ax1 = fig.add_subplot(132)
-
 anndata['MLO'].plot(ax=ax1, label='MLO, US')
 anndata['MNM'].plot(ax=ax1, label='MNM, JP')
 anndata['UKA00315'].plot(ax=ax1, label='LMA, UK')
@@ -142,19 +131,12 @@ ax1.axes.yaxis.set_ticklabels([])
 ax1.legend(ncols=2, loc='lower center', fontsize=7)
 
 ax2 = fig.add_subplot(133)
-
-
 trenddata['MLO'].plot(ax=ax2, label='MLO, US')
 trenddata['MNM'].plot(ax=ax2, label='MNM, JP')
 trenddata['UKA00315'].plot(ax=ax2, label='LMA, UK')
 trenddata['DENW0073'].plot(ax=ax2, label='BK, BK')
 ax2.set_ylim([0,55])
 ax2.tick_params(axis='both', labelsize=8)
-
-
-#ax2.set_xticks([0,6,12,18,24])
-#ax2.set_xticklabels(['00:00','06:00','12:00','18:00','24:00'], fontsize=10)
-
 ax2.grid(True, linestyle='--')
 ax2.set_xlabel("Year", fontsize=10)
 ax2.set_title('Ozone trend')
